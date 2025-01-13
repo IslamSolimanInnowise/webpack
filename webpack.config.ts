@@ -1,11 +1,12 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
-const webpack = require("webpack");
+import * as path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import * as webpack from "webpack";
 
-module.exports = (env) => {
-  return {
+export default (env: { mode: "development" | "production" }) => {
+  const config: webpack.Configuration = {
     // mode: "development",
     // mode: "production",
+
     mode: env.mode ?? "development",
     //   entry: {
     //     file1: path.resolve(__dirname, "src", "index.js"),
@@ -36,4 +37,6 @@ module.exports = (env) => {
       extensions: [".tsx", ".ts", ".js"],
     },
   };
+
+  return config;
 };

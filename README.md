@@ -156,6 +156,63 @@ module.exports = {
 
 #### lesson 7: Меняем язык конфигурационного файла на TypeScript
 
+- to change the configuration file to TypeScript we need to rename the file to `webpack.config.ts` and we need to insstall the following packages `npm i -D ts-node @types/node @types/webpack @types/webpack-dev-server`
+- we also need to install typescript if it's not installed `npm i -D typescript`
+- and then proceed to write your configuration:
+
+```ts
+import * as path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import * as webpack from "webpack";
+
+export default (env: { mode: "development" | "production" }) => {
+  const config: webpack.Configuration = {
+    mode: env.mode ?? "development",
+    entry: path.resolve(__dirname, "src", "index.ts"),
+    output: {
+      path: path.resolve(__dirname, "build"),
+      filename: "[bundle].[contenthash].js",
+      clean: true,
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "public", "index.html"),
+      }),
+      new webpack.ProgressPlugin(),
+    ],
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: "ts-loader",
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"],
+    },
+  };
+
+  return config;
+};
+```
+
+- then we add these configs the tsconfig.json:
+
+```json
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}
+```
+
+- Note that you'll also need to check your tsconfig.json file. If the module in compilerOptions in tsconfig.json is commonjs, the setting is complete, else webpack will fail with an error. This occurs because ts-node does not support any module syntax other than commonjs.
+
+- the soultion for this is to open your tsconfig.json file and look for compilerOptions. Set target to "ES5" and module to "CommonJS" (or completely remove the module option).
+
 #### lesson 8: Настраиваем Dev Server. Watch Режим. Что такое source maps?
 
 #### lesson 9: React. JSX
