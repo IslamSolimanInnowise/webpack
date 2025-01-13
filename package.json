@@ -4,7 +4,8 @@
   "description": "Here we:",
   "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build:prod": "webpack --env mode=production",
+    "build:dev": "webpack --env mode=development"
   },
   "keywords": [],
   "author": "",

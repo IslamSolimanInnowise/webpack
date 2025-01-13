@@ -1,10 +1,10 @@
-# webpack
+# Webpack
 
-## the plan
+## The plan
 
-### part 1
+### Part 1
 
-#### lesson1: Практика. Базовая конфигурация вебпак. Инициализируем проект
+#### lesson 1: Практика. Базовая конфигурация вебпак. Инициализируем проект
 
 - create an NPM project `npm init -y` and install webpack and webpack cli `npm i -D webpack webpack-cli`
 - create a `src` folder with `index.js` file
@@ -62,6 +62,19 @@ output: {
   ```
 
 #### lesson 3: Переменные окружения (env variables)
+
+- To disambiguate in your webpack.config.js between development and production builds you may use environment variables.
+- The webpack command line environment option `--env` allows you to pass in as many environment variables as you like. Environment variables will be made accessible in your webpack.config.js. For example, `--env production` or `--env goal=local`.
+- Setting up your env variable without assignment `--env production` sets `env.production` to true by default.
+- There is one change that you will have to make to your webpack config. Typically, module.exports points to the configuration object. To use the env variable, you must convert module.exports to a function:
+
+```js
+module.exports = (env) => {
+  return {
+    mode: env.production ? "production" : "development",
+  };
+};
+```
 
 ### part 2
 
