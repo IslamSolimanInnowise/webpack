@@ -76,10 +76,27 @@ module.exports = (env) => {
 };
 ```
 
-### part 2
+### Part 2
 
-- HtmlWebpackPlugin. Концепция плагинов.
-- ProgressPlugin
+#### lesson 4: HtmlWebpackPlugin. Концепция плагинов
+
+- The `HtmlWebpackPlugin` simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
+- to use the `HtmlWebpackPlugin` we need to install it `npm i -D html-webpack-plugin`
+- add the plugin to the configuration file via the `plugins` property
+
+  ```js
+  const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+  module.exports = {
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, "public", "index.html"),
+      }),
+    ],
+  };
+  ```
+
+#### lesson 5: ProgressPlugin
 
 ### part 3
 
@@ -126,7 +143,3 @@ module.exports = (env) => {
 - Настраиваем микросервисы. Webpack module federation
 - Shared код из packages
 - Выносим общий tsconfig. Переиспользуем код в сервисах.
-
-```
-
-```
