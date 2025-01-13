@@ -1,10 +1,8 @@
 # Webpack
 
-## The plan
+## Part 1
 
-### Part 1
-
-#### lesson 1: Практика. Базовая конфигурация вебпак. Инициализируем проект
+### lesson 1: Практика. Базовая конфигурация вебпак. Инициализируем проект
 
 - create an NPM project `npm init -y` and install webpack and webpack cli `npm i -D webpack webpack-cli`
 - create a `src` folder with `index.js` file
@@ -12,7 +10,7 @@
 - add scribt build to `package.json` `"build": "webpack"`
 - run `npm run build` and see the output in `dist/main.js`
 
-#### lesson 2: Создаем webpack.config.js. Entry и output. Кеширование файлов. Динамический filename
+### lesson 2: Создаем webpack.config.js. Entry и output. Кеширование файлов. Динамический filename
 
 - create a `webpack.config.js` file and add the basic configuration
 - add `entry` property to the configuration. The entry is the file that webpack will start from.
@@ -61,7 +59,7 @@ output: {
   mode: 'development',
   ```
 
-#### lesson 3: Переменные окружения (env variables)
+### lesson 3: Переменные окружения (env variables)
 
 - To disambiguate in your webpack.config.js between development and production builds you may use environment variables.
 - The webpack command line environment option `--env` allows you to pass in as many environment variables as you like. Environment variables will be made accessible in your webpack.config.js. For example, `--env production` or `--env goal=local`.
@@ -76,9 +74,9 @@ module.exports = (env) => {
 };
 ```
 
-### Part 2
+## Part 2
 
-#### lesson 4: HtmlWebpackPlugin. Концепция плагинов
+### lesson 4: HtmlWebpackPlugin. Концепция плагинов
 
 - The `HtmlWebpackPlugin` simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
 - to use the `HtmlWebpackPlugin` we need to install it `npm i -D html-webpack-plugin`
@@ -96,7 +94,7 @@ module.exports = (env) => {
   };
   ```
 
-#### lesson 5: ProgressPlugin
+### lesson 5: ProgressPlugin
 
 - The `ProgressPlugin` provides a way to track the progress during compilation.
 - to use the `ProgressPlugin` we need to import it from `webpack` and add it to the plugins array
@@ -111,9 +109,9 @@ module.exports = (env) => {
 
 - It's not recommended to use the `ProgressPlugin` in production mode because it will slow down the compilation process.
 
-### Part 3
+## Part 3
 
-#### lesson 6: Концепция лоадеров (loaders). Настраиваем Typescript
+### lesson 6: Концепция лоадеров (loaders). Настраиваем Typescript
 
 - Loaders are transformations that are applied to the source code of a module. They allow you to pre-process files as you `import` or `load` them.
 - Loaders can transform files from a different language (like TypeScript) to JavaScript, or inline images as data URLs. Loaders even allow you to do things like import CSS files directly from your JavaScript modules!
@@ -154,7 +152,7 @@ module.exports = {
 };
 ```
 
-#### lesson 7: Меняем язык конфигурационного файла на TypeScript
+### lesson 7: Меняем язык конфигурационного файла на TypeScript
 
 - to change the configuration file to TypeScript we need to rename the file to `webpack.config.ts` and we need to insstall the following packages `npm i -D ts-node @types/node @types/webpack @types/webpack-dev-server`
 - we also need to install typescript if it's not installed `npm i -D typescript`
@@ -213,7 +211,7 @@ export default (env: { mode: "development" | "production" }) => {
 
 - the soultion for this is to open your tsconfig.json file and look for compilerOptions. Set target to "ES5" and module to "CommonJS" (or completely remove the module option).
 
-#### lesson 8: Настраиваем Dev Server. Watch Режим. Что такое source maps?
+### lesson 8: Настраиваем Dev Server. Watch Режим. Что такое source maps?
 
 - watch mode: webpack can watch files and recompile whenever they change. To enable this feature, you need to set the watch option to true in the configuration file.
 
@@ -225,7 +223,7 @@ module.exports = {
 
 - here we skipped the dev server and source maps parts.
 
-#### lesson 9: React. JSX
+### lesson 9: React. JSX
 
 - to use React in webpack we need to install React and React DOM `npm i react react-dom`
 - we also need to install the types for React and React DOM `npm i -D @types/react @types/react-dom`
@@ -239,9 +237,9 @@ import App from "./components/App";
 createRoot(document.getElementById("root")!).render(<App />);
 ```
 
-### Part 4
+## Part 4
 
-#### lesson 10: Работа со стилями. css и scss
+### lesson 10: Работа со стилями. css и scss
 
 - to use css in webpack we need to install the following packages `npm i -D css-loader` and add these configs in the webpack configuration file
 
@@ -282,39 +280,67 @@ module.exports = {
 
 - Additionally, we need to install style loader for any of them to work `npm i -D style-loader`
 
-#### lesson 11: MiniCssExtractPlugin
+### lesson 11: MiniCssExtractPlugin
 
-#### lesson 12: Декомпозируем конфиг. Улучшаем читаемость и подготавливаем к переиспользованию
+- The `MiniCssExtractPlugin` extracts CSS into separate css files. It creates a CSS file per JS file which contains CSS. To Install it run `npm i -D mini-css-extract-plugin`
+- to use it we need to import it in the webpack configuration file and add it to the plugins array
 
-#### lesson 13: Изоляция стилей. Css modules
+```js
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-### part 5
+{
+  plugins: [new MiniCssExtractPlugin()];
+}
+```
+
+- and then we use its loader as the first element in the `use` array to extract the CSS into a separate file instead of `style-loader`.
+
+```js
+module: {
+  rules: [
+    {
+      test: /\.css$/i,
+      use: [
+        // "style-loader",
+        MiniCssExtractPlugin.loader,
+        "css-loader",
+      ],
+    },
+  ];
+}
+```
+
+### lesson 12: Декомпозируем конфиг. Улучшаем читаемость и подготавливаем к переиспользованию
+
+### lesson 13: Изоляция стилей. Css modules
+
+## part 5
 
 - Роутинг. Ленивые чанки. Code splitting. Размер бандла. Bundle analyzer. History Api Fallback.
 
-### part 6
+## part 6
 
 - Алиасы. Резолвинг модулей. Абсолютные импорты
 - Ассеты. Работа с картинками, шрифтами, иконками.
 
-### part 7
+## part 7
 
 - Глобальные переменные сборки. Tree shaking
 - Проверка типов в отдельном процессе. ForkTsCheckerPlugin
 
-### part 8
+## part 8
 
 - Hot module replacement (hmr)
 - Favicon. CopyPlugin
 - Настраиваем Babel. Babel-loader. Современные компиляторы. Swc и esbuild.
 - Создаем свой babel плагин
 
-### part 9
+## part 9
 
 - Source map на примере ошибки
 - Настраиваем монорепозиторий. Теория про микрофронтенд. npm workspaces.
 
-### part 10
+## part 10
 
 - Настраиваем микросервисы. Webpack module federation
 - Shared код из packages

@@ -1,6 +1,7 @@
 import * as path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import * as webpack from "webpack";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 type Mode = "development" | "production";
 
@@ -29,6 +30,7 @@ export default (env: EnvVariables) => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public", "index.html"),
       }),
+      new MiniCssExtractPlugin(),
       // progress plugin is very slow so i'll comment it out
       // new webpack.ProgressPlugin(),
     ],
@@ -41,7 +43,12 @@ export default (env: EnvVariables) => {
         },
         {
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: [
+            // "style-loader",
+            // hear we will use mini css extract plugin instead of style loader, but of course we could use style loader too
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+          ],
         },
         {
           test: /\.s[ac]ss$/i,
