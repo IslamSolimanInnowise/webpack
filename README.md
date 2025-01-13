@@ -6,17 +6,62 @@
 
 #### lesson1: Практика. Базовая конфигурация вебпак. Инициализируем проект
 
-Here we:
-
 - create an NPM project `npm init -y` and install webpack and webpack cli `npm i -D webpack webpack-cli`
 - create a `src` folder with `index.js` file
 - create another file. for example `test.js` and we export a function from it and use the function call in `index.js`
 - add scribt build to `package.json` `"build": "webpack"`
 - run `npm run build` and see the output in `dist/main.js`
 
-#### Создаем webpack.config.js. Entry и output. Кеширование файлов. Динамический filename
+#### lesson 2: Создаем webpack.config.js. Entry и output. Кеширование файлов. Динамический filename
 
-#### Переменные окружения (env variables)
+- create a `webpack.config.js` file and add the basic configuration
+- add `entry` property to the configuration. The entry is the file that webpack will start from.
+- import `path` from `node` and use it to create the path to the entry file
+- if we have more than one entry point we can use an object instead of a string like this
+
+  ```js
+  entry: {
+    main: './src/index.js',
+    test: './src/test.js',
+  },
+  ```
+
+  here we have two entry points `main` and `test` and webpack will create two files `main.js` and `test.js`
+
+- add the `output` property to the configuration. The output is the file that webpack will create after bundling the files
+- the output property is an object that has two properties `path` and `filename` like this
+
+  ```js
+  output: {
+     path: path.resolve(__dirname, 'dist'),
+    filename: 'my-first-webpack.bundle.js',
+    }
+  ```
+
+- the problem with static filenames is that the browser will cache the file and if we make changes to the file the browser will not load the new file because it has the old file in the cache. to solve this problem we can use dynamic filenames like this
+
+```js
+output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[contenthash].js',
+    }
+```
+
+- we can use the property `clean` in the output object to clean the `dist` folder before creating the new files
+
+  ```js
+  output: {
+    clean: true,
+    },
+  ```
+
+- the third property we can use in the configuratiion is `mode` and it can be `development` or `production`. The defference between the two modes is that in the `development` mode the files are not minified and the source maps are included in the files. In the `production` mode the files are minified and the source maps are not included in the files. The default value is `production` but we can change it to `development` like this:
+
+  ```js
+  mode: 'development',
+  ```
+
+#### lesson 3: Переменные окружения (env variables)
 
 ### part 2
 
@@ -68,3 +113,7 @@ Here we:
 - Настраиваем микросервисы. Webpack module federation
 - Shared код из packages
 - Выносим общий tsconfig. Переиспользуем код в сервисах.
+
+```
+
+```
