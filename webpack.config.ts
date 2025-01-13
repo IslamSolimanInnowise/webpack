@@ -29,7 +29,8 @@ export default (env: EnvVariables) => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public", "index.html"),
       }),
-      new webpack.ProgressPlugin(),
+      // progress plugin is very slow so i'll comment it out
+      // new webpack.ProgressPlugin(),
     ],
     module: {
       rules: [
@@ -37,6 +38,21 @@ export default (env: EnvVariables) => {
           test: /\.tsx?$/,
           use: "ts-loader",
           exclude: /node_modules/,
+        },
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            // Creates `style` nodes from JS strings
+            "style-loader",
+            // Translates CSS into CommonJS
+            "css-loader",
+            // Compiles Sass to CSS
+            "sass-loader",
+          ],
         },
       ],
     },

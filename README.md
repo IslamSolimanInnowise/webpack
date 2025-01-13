@@ -239,12 +239,54 @@ import App from "./components/App";
 createRoot(document.getElementById("root")!).render(<App />);
 ```
 
-### part 4
+### Part 4
 
-- Работа со стилями. css и scss
-- MiniCssExtractPlugin
-- Декомпозируем конфиг. Улучшаем читаемость и подготавливаем к переиспользованию
-- Изоляция стилей. Css modules
+#### lesson 10: Работа со стилями. css и scss
+
+- to use css in webpack we need to install the following packages `npm i -D css-loader` and add these configs in the webpack configuration file
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
+};
+```
+
+- to use scss in webpack we need to install the following packages `npm i -D sass sass-loader` and add these configs in the webpack configuration file
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
+    ],
+  },
+};
+```
+
+- Additionally, we need to install style loader for any of them to work `npm i -D style-loader`
+
+#### lesson 11: MiniCssExtractPlugin
+
+#### lesson 12: Декомпозируем конфиг. Улучшаем читаемость и подготавливаем к переиспользованию
+
+#### lesson 13: Изоляция стилей. Css modules
 
 ### part 5
 
