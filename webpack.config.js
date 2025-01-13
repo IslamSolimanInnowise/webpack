@@ -11,7 +11,7 @@ module.exports = (env) => {
     //     file1: path.resolve(__dirname, "src", "index.js"),
     //     file2: path.resolve(__dirname, "src", "count.js"),
     //   },
-    entry: path.resolve(__dirname, "src", "index.js"),
+    entry: path.resolve(__dirname, "src", "index.ts"),
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "[bundle].[contenthash].js", // [contenthash] is used to generate a unique hash for the file
@@ -23,5 +23,17 @@ module.exports = (env) => {
       }),
       new webpack.ProgressPlugin(),
     ],
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: "ts-loader",
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"],
+    },
   };
 };

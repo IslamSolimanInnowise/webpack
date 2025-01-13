@@ -111,12 +111,54 @@ module.exports = (env) => {
 
 - It's not recommended to use the `ProgressPlugin` in production mode because it will slow down the compilation process.
 
-### part 3
+### Part 3
 
-- Концепция лоадеров (loaders). Настраиваем Typescript
-- Меняем язык конфигурационного файла на TypeScript
-- Настраиваем Dev Server. Watch Режим. Что такое source maps?
-- React. JSX
+#### lesson 6: Концепция лоадеров (loaders). Настраиваем Typescript
+
+- Loaders are transformations that are applied to the source code of a module. They allow you to pre-process files as you `import` or `load` them.
+- Loaders can transform files from a different language (like TypeScript) to JavaScript, or inline images as data URLs. Loaders even allow you to do things like import CSS files directly from your JavaScript modules!
+- to use TypeScript in webpack we need to install TS and the TypeScript loader `npm i -D ts-loader typescript`
+- Next we need to change the files extensions to ts and also change the entry point to `index.ts` instead of `index.js`
+- then we need to add tsconfig.json file to the root of the project and add the configuration for TypeScript
+
+  ```json
+  {
+    "compilerOptions": {
+      "outDir": "./dist/",
+      "noImplicitAny": true,
+      "module": "es6",
+      "target": "es5",
+      "jsx": "react",
+      "allowJs": true,
+      "moduleResolution": "node"
+    }
+  }
+  ```
+
+- finally, we need to add the TypeScript loader to the webpack configuration file
+
+```js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
+};
+```
+
+#### lesson 7: Меняем язык конфигурационного файла на TypeScript
+
+#### lesson 8: Настраиваем Dev Server. Watch Режим. Что такое source maps?
+
+#### lesson 9: React. JSX
 
 ### part 4
 
