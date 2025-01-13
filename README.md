@@ -98,6 +98,19 @@ module.exports = (env) => {
 
 #### lesson 5: ProgressPlugin
 
+- The `ProgressPlugin` provides a way to track the progress during compilation.
+- to use the `ProgressPlugin` we need to import it from `webpack` and add it to the plugins array
+
+  ```js
+  const webpack = require("webpack");
+
+  module.exports = {
+    plugins: [new webpack.ProgressPlugin()],
+  };
+  ```
+
+- It's not recommended to use the `ProgressPlugin` in production mode because it will slow down the compilation process.
+
 ### part 3
 
 - Концепция лоадеров (loaders). Настраиваем Typescript
