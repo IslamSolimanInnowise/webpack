@@ -2,12 +2,19 @@ import * as path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import * as webpack from "webpack";
 
-export default (env: { mode: "development" | "production" }) => {
+type Mode = "development" | "production";
+
+interface EnvVariables {
+  mode: Mode;
+}
+
+export default (env: EnvVariables) => {
   const config: webpack.Configuration = {
     // mode: "development",
     // mode: "production",
 
-    mode: env.mode ?? "development",
+    mode: env.mode ?? "production",
+    watch: true,
     //   entry: {
     //     file1: path.resolve(__dirname, "src", "index.js"),
     //     file2: path.resolve(__dirname, "src", "count.js"),

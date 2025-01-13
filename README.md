@@ -215,6 +215,16 @@ export default (env: { mode: "development" | "production" }) => {
 
 #### lesson 8: Настраиваем Dev Server. Watch Режим. Что такое source maps?
 
+- watch mode: webpack can watch files and recompile whenever they change. To enable this feature, you need to set the watch option to true in the configuration file.
+
+```ts
+module.exports = {
+  watch: true,
+};
+```
+
+- here we skipped the dev server and source maps parts.
+
 #### lesson 9: React. JSX
 
 ### part 4
