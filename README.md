@@ -227,6 +227,18 @@ module.exports = {
 
 #### lesson 9: React. JSX
 
+- to use React in webpack we need to install React and React DOM `npm i react react-dom`
+- we also need to install the types for React and React DOM `npm i -D @types/react @types/react-dom`
+- as we're using ts loader, it can work with jsx and tsx code, if we use jsx only, we would have need to install babel and the babel loader.
+- in the index.tsx file in the src folder we need a code like this to intitialize our react app:
+
+```tsx
+import { createRoot } from "react-dom/client";
+import App from "./components/App";
+
+createRoot(document.getElementById("root")!).render(<App />);
+```
+
 ### part 4
 
 - Работа со стилями. css и scss
