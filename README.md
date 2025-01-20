@@ -312,6 +312,100 @@ module: {
 
 ### lesson 12: Декомпозируем конфиг. Улучшаем читаемость и подготавливаем к переиспользованию
 
+1 - to decompose the configuration file we can create a config folder and add webpack folder in which we can add:
+
+- `buildModule.ts`
+- `buildPlugins.ts`
+
+2 - after decomposing the file the final webpack configuration file will look like this:
+
+```ts
+import * as path from "path";
+import * as webpack from "webpack";
+import { plugins } from "./config/webpack/buildPlugins";
+import { module } from "./config/webpack/buildModule";
+
+type Mode = "development" | "production";
+
+interface EnvVariables {
+  mode: Mode;
+}
+
+export default (env: EnvVariables) => {
+  const config: webpack.Configuration = {
+    mode: env.mode ?? "production",
+    watch: true,
+    entry: path.resolve(__dirname, "src", "index.tsx"),
+    output: {
+      path: path.resolve(__dirname, "build"),
+      filename: "[bundle].[contenthash].js",
+      clean: true,
+    },
+    plugins,
+    module,
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"],
+    },
+  };
+
+  return config;
+};
+```
+
+- the `buildModule.ts` file will look like this:
+
+```ts
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import * as webpack from "webpack";
+
+export const module: webpack.ModuleOptions = {
+  rules: [
+    {
+      test: /\.tsx?$/,
+      use: "ts-loader",
+      exclude: /node_modules/,
+    },
+    {
+      test: /\.css$/i,
+      use: [
+        // "style-loader",
+        // hear we will use mini css extract plugin instead of style loader, but of course we could use style loader too
+        MiniCssExtractPlugin.loader,
+        "css-loader",
+      ],
+    },
+    {
+      test: /\.s[ac]ss$/i,
+      use: [
+        // Creates `style` nodes from JS strings
+        "style-loader",
+        // Translates CSS into CommonJS
+        "css-loader",
+        // Compiles Sass to CSS
+        "sass-loader",
+      ],
+    },
+  ],
+};
+```
+
+- the `buildPlugins.ts` file will look like this:
+
+```ts
+import * as path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+
+export const plugins = [
+  new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, "public", "index.html"),
+  }),
+  new MiniCssExtractPlugin(),
+  // progress plugin is very slow so i'll comment it out
+  //   new webpack.ProgressPlugin(),
+];
+```
+
 ### lesson 13: Изоляция стилей. Css modules
 
 ## part 5

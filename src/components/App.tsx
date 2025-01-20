@@ -9,8 +9,8 @@ const App: React.FC = () => {
   return (
     <div>
       <h1>{count}</h1>
-      <h2>hi 2</h2>
       <button onClick={() => setCount(count + 1)}>Add 1</button>
+      <h2>another element3</h2>
     </div>
   );
 };
